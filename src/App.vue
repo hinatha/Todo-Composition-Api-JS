@@ -1,42 +1,26 @@
 <template>
   <div id="app">
-    <h1>Todoリスト</h1>
-    <!-- The data in v-model is synchronized with the form input value -->
-    <input v-model="todo"><br>
-    <!-- Call addTodo method by click event -->
-    <button @click="addTodo">追加</button>
-    <ul>
-      <!-- Display todos with index as key -->
-      <!-- Call removeTodo method with index as an argument  -->
-      <li v-for="(todo, index) in todos" :key="index">{{ todo }} <span @click="removeTodo(index)">X</span></li>
-    </ul>
+    <!-- In case of reactive -->
+    <!-- {{ state.message }} -->
+    <!-- Not need to use "state." -->
+    <h1>{{ message }}</h1>
   </div>
 </template>
 
 <script>
+// Vue which is from version 2.7 already has composition api
+// import { reactive, toRefs } from "@vue/composition-api";
+import { reactive, toRefs } from "vue";
 export default {
-  // Set form empty todo and todo list(todos)
-  data() {
+  setup() {
+    // Define state by using reactive
+    const state = reactive({
+      message: 'Hello Wold'
+    })
     return {
-      todo: '',
-      todos:[]
-    }
-  },
-  methods: {
-    addTodo() {
-      // Add todo to todos in data()
-      this.todos.push(this.todo)
-      // Change to empty todo in form
-      this.todo = ''
-    },
-    removeTodo(index) {
-      // splice(index: position of starting to remove, 1: the number of removing)
-      this.todos.splice(index, 1)
+      // Change reactive to ref
+      ...toRefs(state),
     }
   }
 }
 </script>
-
-// non style
-<style>
-</style>
