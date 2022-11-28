@@ -1,21 +1,21 @@
 <template>
   <div id="app">
-    <!-- Showing state.message from setup() -->
-    {{ state.message }}
+    <!-- Not need to use "state." -->
+    <h1>{{ message }}</h1>
   </div>
 </template>
 
 <script>
-import { reactive } from "vue";
+// Vue which is from version 2.7 already has composition api
+// import { ref } from "@vue/composition-api";
+import { ref } from "vue";
 export default {
   setup() {
-    // Set message
-    const state = reactive({
-      message: 'Hello Wold'
-    })
-    // return message to template
+    // Set message by using ref
+    const message = ref('Hello World')
+    
     return {
-      state,
+      message
     }
   }
 }
