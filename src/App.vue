@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <h1>Todoリスト</h1>
+    <!-- Set getListLength from state -->
+    <!-- <h1>Todoリスト {{ state.getListLength }}</h1> -->
+
+    <!-- Set getListLength from function -->
+    <h1>Todoリスト {{ getListLength }}</h1>
     <!-- "state.todo" in v-model is synchronized with the form input value -->
     <input v-model="state.todo"><br>
     <!-- Call addTodo method by click event -->
@@ -19,14 +23,15 @@
 // Vue which is from version 2.7 already has composition api
 // FYI: https://www.npmjs.com/package/@vue/composition-api
 // import { reactive } from "@vue/composition-api";
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 export default {
   // Composition api can define function inside setup()
   setup() {
-    // Set todo(form value), todos(todo list)
     const state = reactive({
       todo: '',
-      todos: []
+      todos: [],
+      // Set getListLength by using reactive
+      // getListLength: computed(() => state.todos.length)
     })
 
     const addTodo = () => {
@@ -39,10 +44,14 @@ export default {
     // splice(index: position of starting to remove, 1: the number of removing)
     const removeTodo = index => state.todos.splice(index,1)
     
+    // Define getListLength as function
+    const getListLength = computed(() => state.todos.length)
+    
     return {
       state,
       addTodo,
-      removeTodo
+      removeTodo,
+      getListLength // Function of getListLength 
     }
   }
 }
