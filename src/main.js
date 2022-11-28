@@ -6,7 +6,8 @@ import App from './App.vue'
 const app = createApp(App)
 
 // Inject CompositionApi plugin but don't need to import it
-// This Vue version already has composition api
+// Vue which is from version 2.7 already has composition api
+// FYI: https://www.npmjs.com/package/@vue/composition-api
 // app.use(CompositionApi) // Add new
 
 // Amount app like below
