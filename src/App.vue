@@ -1,25 +1,48 @@
 <template>
   <div id="app">
-    <!-- In case of reactive -->
-    <!-- {{ state.message }} -->
-    <!-- Not need to use "state." -->
-    <h1>{{ message }}</h1>
+    <h1>Todoリスト</h1>
+    <!-- "state.todo" in v-model is synchronized with the form input value -->
+    <input v-model="state.todo"><br>
+    <!-- Call addTodo method by click event -->
+    <button @click="addTodo">追加</button>
+    <ul>
+      <!-- Display state.todos with index as key -->
+      <!-- Call removeTodo method with index as an argument  -->
+      <li v-for="(todo, index) in state.todos" :key="index">
+        {{ todo }} <span @click="removeTodo(index)">X</span>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 // Vue which is from version 2.7 already has composition api
-// import { reactive, toRefs } from "@vue/composition-api";
-import { reactive, toRefs } from "vue";
+// FYI: https://www.npmjs.com/package/@vue/composition-api
+// import { reactive } from "@vue/composition-api";
+import { reactive } from "vue";
 export default {
+  // Composition api can define function inside setup()
   setup() {
-    // Define state by using reactive
+    // Set todo(form value), todos(todo list)
     const state = reactive({
-      message: 'Hello Wold'
+      todo: '',
+      todos: []
     })
+
+    const addTodo = () => {
+      // Add form value to todo list
+      state.todos.push(state.todo)
+      // Make form value empty
+      state.todo = ''
+    }
+
+    // splice(index: position of starting to remove, 1: the number of removing)
+    const removeTodo = index => state.todos.splice(index,1)
+    
     return {
-      // Change reactive to ref
-      ...toRefs(state),
+      state,
+      addTodo,
+      removeTodo
     }
   }
 }
