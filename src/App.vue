@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <!-- Set getListLength from state -->
-    <h1>Todoリスト {{ state.getListLength }}</h1>
+    <!-- <h1>Todoリスト {{ state.getListLength }}</h1> -->
+
+    <!-- Set getListLength from function -->
+    <h1>Todoリスト {{ getListLength }}</h1>
     <!-- "state.todo" in v-model is synchronized with the form input value -->
     <input v-model="state.todo"><br>
     <!-- Call addTodo method by click event -->
@@ -27,7 +30,8 @@ export default {
     const state = reactive({
       todo: '',
       todos: [],
-      getListLength: computed(() => state.todos.length)
+      // Set getListLength by using reactive
+      // getListLength: computed(() => state.todos.length)
     })
 
     const addTodo = () => {
@@ -40,10 +44,14 @@ export default {
     // splice(index: position of starting to remove, 1: the number of removing)
     const removeTodo = index => state.todos.splice(index,1)
     
+    // Define getListLength as function
+    const getListLength = computed(() => state.todos.length)
+    
     return {
       state,
       addTodo,
-      removeTodo
+      removeTodo,
+      getListLength // Function of getListLength 
     }
   }
 }
